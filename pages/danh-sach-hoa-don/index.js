@@ -7,12 +7,14 @@ import Head from 'next/head'
 import { ToastContainer } from 'react-toastify';
 import AppLayout from '../../components/layout';
 import { getVND } from '../../helpers/getDateTime';
+import { actGetDataUser } from '../../redux/actions/user';
+import { Loading } from '../../components/Loading';
 
 class index extends Component {
     // componentDidMount() {
-    //     var { router } = this.props
-    //     var { id } = router.query
-    //     // console.log(this.props);
+    //     var { users } = this.props
+    //     console.log(users);
+    //     users ? this.props.onGetDataUser(users.dataUser.id_user) : ''
 
     // }
     showList(list) {
@@ -34,8 +36,9 @@ class index extends Component {
     }
     render() {
         var { users } = this.props
-
+        
         return (
+            // users.loading_getData ? <Loading/>:
             <div>
                 <Head>
                     <title>Danh sách hóa đơn</title>

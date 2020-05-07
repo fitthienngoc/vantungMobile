@@ -318,12 +318,12 @@ $(function() {
     });
 
     //quantity selector
-    $(document).on('click', '.quantity-select .minus', function(){
+    $(document).on('click', '.quantity-select .minuss', function(){
     	var newValue = parseInt($(this).parent().find('.number').text(), 10);
     	$(this).parent().find('.number').text(newValue>1?(newValue-1):newValue);
     });
 
-    $(document).on('click', '.quantity-select .plus', function(){
+    $(document).on('click', '.quantity-select .pluss', function(){
     	var newValue = parseInt($(this).parent().find('.number').text(), 10);
     	$(this).parent().find('.number').text(newValue+1);
     });

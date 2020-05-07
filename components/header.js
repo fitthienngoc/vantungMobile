@@ -7,8 +7,10 @@ import AppPopup from './popup';
 import Cart from './cart/Cart';
 import { actSearchByIdCategory } from '../redux/actions/Search/sidebar';
 import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 class Header extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,11 +19,20 @@ class Header extends React.Component {
       togleSearch: false,
       search: '',
       id_categorie: -1,
-      categories: 'sanpham'
+      categories: 'sanpham',
+      pathname: '/'
     };
   }
   componentDidMount() {
+
+    console.log('sssssssssssssssssss',window.location.pathname);
+    
+    window.location && window.location.pathname ? this.setState({
+      pathname: window.location.pathname
+    }) : null
+
     var { router } = this.props
+
     if (router && router.query) {
       var { query } = router
       var { id_categorie, categories } = query
@@ -91,7 +102,7 @@ class Header extends React.Component {
 
   render() {
     var { users, cartReducer } = this.props
-    var { togleSearch } = this.state
+    var { togleSearch, pathname } = this.state
     return (
       <>
         <header>
@@ -116,7 +127,7 @@ class Header extends React.Component {
                       <a href="index1">sp</a>
                     </div>
                   </div> */}
-                  <div className="entry hidden-xs hidden-sm"><a href="#"><i className="fa fa-heart-o" aria-hidden="true" /></a></div>
+                  {/* <div className="entry hidden-xs hidden-sm"><a href="#"><i className="fa fa-heart-o" aria-hidden="true" /></a></div> */}
                   <Cart onRemove={this.props.onRemove} cartReducer={cartReducer} />
 
                   <div className="hamburger-icon">
@@ -139,7 +150,7 @@ class Header extends React.Component {
                     <div className="nav-close-layer" />
                     <nav>
                       <ul>
-                        <li className="active">
+                        <li className={pathname == '/' ? "active" : ''}>
                           <a href="/">Trang chủ</a>
                           {/* <div className="menu-toggle" />
                           <ul>
@@ -151,13 +162,15 @@ class Header extends React.Component {
                             <li><a href="index6">Homepage 6</a></li>
                           </ul> */}
                         </li>
-                        <li>
-                          <a href="/cart">Giỏ Hàng</a>
+                        <li className={pathname == '/cart' ? "active" : ''}>
+                          <a href="/cart">Giỏ Hàng
+                          
+                          </a>
                         </li>
-                        <li>
+                        <li className={pathname == '/danh-sach-hoa-don' ? "active" : ''}>
                           <a href="/danh-sach-hoa-don">Hóa Đơn</a>
                         </li>
-                        <li>
+                        <li className={pathname == '/search' ? "active" : ''}>
                           <a href="/search">Tìm Sản Phẩm</a>
                         </li>
 

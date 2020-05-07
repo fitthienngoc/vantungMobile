@@ -89,7 +89,7 @@ export const actSaveOrder = (data) => {
             if (res && !res.data) { Router.push({ pathname: '/404' }) }
             if (res && res.data && res.data.status == 200) {
                 dispatch({ type: Types.SAVE_ORDER_SUCCESS, Id: res.data.Id });
-                orderOnline == 1 ? null : setTimeout(Router.push({ pathname: '/' }), 10000)
+                setTimeout(Router.push({ pathname: '/chi-tiet-hoa-don/'+res.data.Id }), 50000)
             }
             if (res && res.data.status == 202) {
                 dispatch({ type: Types.SAVE_ORDER_FAIL, error: res.data.error });

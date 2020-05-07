@@ -124,6 +124,7 @@ const users = (state = initialState, action) => {
             return { ...state };
         case Types.GET_DATA_USER_SUCCESS:
             state.loading_getData = false
+            state.dataUser = action.dataUser
             return { ...state };
         case Types.GET_DATA_USER_FAIL:
             state.loading_getData = false

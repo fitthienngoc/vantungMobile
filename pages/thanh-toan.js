@@ -78,6 +78,7 @@ class CheckOut extends React.Component {
             if (orderOnline) {
 
                 this.props.onSaveOrder(data)
+                toast.success("Đặt hàng thanh công. Cảm ơn quý khách!")
             } else {
 
                 this.props.onSaveOrder(data)
