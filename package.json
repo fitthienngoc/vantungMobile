@@ -1,0 +1,40 @@
+{
+  "name": "create-next-example-app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "@brainhubeu/react-carousel": "^1.12.6",
+    "@progress/kendo-drawing": "^1.6.0",
+    "@progress/kendo-react-pdf": "^3.12.0",
+    "@react-pdf/renderer": "^1.6.8",
+    "axios": "^0.18.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "history": "^4.10.1",
+    "js-cookie": "^2.2.1",
+    "moment": "^2.24.0",
+    "next": "8.0.3",
+    "next-redux-wrapper": "^3.0.0",
+    "nuka-carousel": "^4.6.3",
+    "react": "16.8.3",
+    "react-animated-slider": "^2.0.0",
+    "react-currency-format": "^1.0.0",
+    "react-dom": "16.8.3",
+    "react-facebook-login": "^4.1.1",
+    "react-js-pagination": "^3.0.3",
+    "react-loader-spinner": "^3.1.5",
+    "react-moment": "^0.9.7",
+    "react-redux": "^6.0.1",
+    "react-slick": "^0.25.2",
+    "react-to-pdf": "0.0.11",
+    "react-to-print": "^2.6.3",
+    "react-toastify": "^5.5.0",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "vn-payments": "^1.1.0"
+  }
+}
