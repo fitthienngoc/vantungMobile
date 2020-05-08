@@ -13,13 +13,21 @@ import Sidebar from '../components/Search/sidebar';
 export default class Product extends React.Component {
     constructor(props) {
         super(props);
+        // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzz',this.props);
+
         this.state = {
             size: 15,
-            quality: 1,
+            quality: this.props.homeProducts.productDetail.data.quality ? 1 : 0,
             color: ''
         };
     }
-
+    componentDidMount() {
+        // var { homeProducts } = this.props
+        // if (homeProducts) var { productDetail } = homeProducts
+        // this.setState({
+        //     quality : productDetail.quality == 0 ? 0 : 1
+        // })
+    }
 
     static getInitialProps(ctx) {
         initialize(ctx);
@@ -36,6 +44,8 @@ export default class Product extends React.Component {
     }
 
     updateQuality(quality, qualityMax, action) {
+        if (qualityMax == 0) this.props.notify.info(`Sản phẩm hiện đang hết hàng! Quý khách vui lòng chọn sản phẩm khác.`, { position: "top-center" })
+
         if (action == '+') {
             quality < qualityMax ? quality++ : null
         }
@@ -70,8 +80,11 @@ export default class Product extends React.Component {
     render() {
         var { homeProducts, users, onSendCommentProduct } = this.props
         var { quality } = this.state
-        if (homeProducts) var { productDetail } = homeProducts
-        console.log(`homeProducts`, homeProducts);
+        if (homeProducts) {
+            var { productDetail } = homeProducts
+            var limit = productDetail.data.quality
+        }
+
         return (
             <>
                 <Head>
@@ -149,7 +162,7 @@ export default class Product extends React.Component {
                                                     <div className="simple-article size-3 col-xs-b5">Mã SP : <span className="grey">{productDetail.data.code}</span></div>
                                                 </div>
                                                 <div className="col-sm-6 col-sm-text-right">
-                                                    <div className="simple-article size-3 col-xs-b20">Có sẵn : <span className="grey">{productDetail.data.quality > 0 ? "Còn Hàng" : "Hết Hàng"}</span></div>
+                                                    <div className="simple-article size-3 col-xs-b20">Tình trạng : <span className="grey">{productDetail.data.quality > 0 ? "Còn Hàng" : "Hết Hàng"}</span></div>
                                                 </div>
                                             </div>
                                             <div className="simple-article size-3 col-xs-b30">{productDetail.data.tinh_nang_dac_biet}</div>
@@ -185,8 +198,8 @@ export default class Product extends React.Component {
                                                         var { quality, color } = this.state
                                                         color ? data.color_by = color : data.color_by = productDetail.data.cpu[0]
                                                         data.quality_by = quality
-                                                        this.props.onAddProductToCart(productDetail.data)
-                                                        this.props.notify.success(`✓ Thêm ${data.name} thành công!`, { position: "top-center" })
+                                                        limit > 0 ? this.props.onAddProductToCart(productDetail.data) : null
+                                                        limit > 0 ? this.props.notify.success(`✓ Thêm ${data.name} thành công!`, { position: "top-center" }) : this.props.notify.info(`Sản phẩm hiện đang hết hàng! Quý khách vui lòng chọn sản phẩm khác.`, { position: "top-center" })
 
                                                     }} className="button size-2 style-2 block">
                                                         <span className="button-wrapper">
@@ -345,9 +358,9 @@ export default class Product extends React.Component {
                                     <div className="empty-space col-xs-b35 col-md-b70" />
                                     <div className="empty-space col-md-b70" /> */}
                                 </div>
-                                <Sidebar/>
-                               </div>
-                            
+                                <Sidebar router={this.props.router}/>
+                            </div>
+
 
                             <div className="empty-space col-md-b70" />
                             <div className="swiper-container arrows-align-top" >

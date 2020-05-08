@@ -29,7 +29,8 @@ export default class MyDocument extends Document {
 
           {/* <!-- fonts --> */}
           <link href="https://fonts.googleapis.com/css?family=Questrial|Raleway:700,900" rel="stylesheet" />
-
+          
+          {/* <link href="/static/theme1/rc-slider.css" rel="stylesheet" type="text/css" /> */}
           <link href="/static/theme1/css/me.css" rel="stylesheet" type="text/css" />
           <link href="/static/theme1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
           <link href="/static/theme1/css/bootstrap.extension.css" rel="stylesheet" type="text/css" />

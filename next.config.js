@@ -1,4 +1,5 @@
-module.exports = {
+const withLess = require('@zeit/next-less');
+module.exports = withLess({
   webpack: config => {
     // Fixes npm packages that depend on `fs` module
     config.node = {
@@ -6,5 +7,8 @@ module.exports = {
     }
 
     return config
+  },
+  lessLoaderOptions: {
+    javascriptEnabled: true
   }
-}
+})

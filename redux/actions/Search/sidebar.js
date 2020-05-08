@@ -24,17 +24,23 @@ export const actGetSidebar = () => {
     }
 }
 
-export const actSearchByIdCategory = (router, id = -1, search = '', page = 1, limit = 9, listId) => {
+export const actSearchByIdCategory = (router, id = -1, search = '', page = 1, limit = 9, listId,price='0 AND 1000000000') => {
 
     var header = authHeader();
     console.log(`router`, router);
     limit == '' ? limit = 9 : null
     if (router && router.asPath) {
         var { asPath } = router
+       
+        
         search = getAllUrlParams(asPath).search
         page = getAllUrlParams(asPath).page
+        price = getAllUrlParams(asPath).price
+
         search == undefined ? search = '' : null
         page == undefined ? page = '' : null
+        price == undefined ? price = '' : null
+        console.log('                                                          ',price);
     }
 
     if (router && router.query) {
@@ -46,7 +52,7 @@ export const actSearchByIdCategory = (router, id = -1, search = '', page = 1, li
 
     return dispatch => {
         dispatch({ type: Types.GET_SEARCH_BY_ID_CATEGORY_REQUEST });
-        return HTTP('?action=search&id_categorie=' + id + '&search=' + search + '&page=' + page + '&limit=' + limit, 'GET', listId, header).then(res => {
+        return HTTP('?action=search&id_categorie=' + id + '&search=' + search + '&page=' + page + '&limit=' + limit+ '&price=' + price, 'GET', listId, header).then(res => {
             if (res && res.data && res.data.status == 200) {
                 dispatch({ type: Types.GET_SEARCH_BY_ID_CATEGORY_SUCCESS, data: res.data.data });
 

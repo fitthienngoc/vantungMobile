@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actGetSidebar, actSearchByIdCategory } from '../../redux/actions/Search/sidebar';
 import { Loading } from '../Loading';
-import { cleanUrl } from '../../helpers/getDateTime';
+import { cleanUrl, getVND, getAllUrlParams } from '../../helpers/getDateTime';
+import Router from 'next/router'
+
+import { Slider, RangeSlider } from 'rsuite';
+import 'rsuite/lib/styles/index.less';
 
 function mapStateToProps(state) {
     return {
@@ -16,8 +20,8 @@ function mapDispatchToProps(dispatch) {
         onGetSidebar: () => {
             dispatch(actGetSidebar())
         },
-        onSearch: ( router) => {
-            dispatch(actSearchByIdCategory(router))
+        onSearch: (Router) => {
+            dispatch(actSearchByIdCategory(Router))
         }
     };
 }
@@ -25,10 +29,44 @@ function mapDispatchToProps(dispatch) {
 
 
 class Sidebar extends Component {
-    state = ({ listId: [] })
+    state = ({
+        listId: [],
+        price: [0, 100],
+        search: '',
+        pathname: '/',
+        categories: 'tat-ca',
+        id_categorie: -1
+    })
 
     componentDidMount() {
         this.props.onGetSidebar()
+        var { router } = this.props
+        var { asPath, pathname, query } = router
+        var { categories, id_categorie } = query
+        categories == undefined ? categories =this.state.categories : null
+        id_categorie == undefined ? id_categorie= this.state.id_categorie : null
+
+
+        var params = getAllUrlParams(asPath)
+        var { price, search } = this.state
+        if (params.search) {
+            var search = params.search
+            search = decodeURIComponent(search)
+        }
+        if (params.price) {
+            var price = params.price
+            price = decodeURIComponent(price)
+            price = price.split(" and ")
+            price = [price[0]/500000 ,price[1]/500000]
+        }
+
+        this.setState({
+            search,
+            price,
+            categories,
+            id_categorie,
+            pathname
+        })
     }
 
     togleBrand = (e) => {
@@ -37,8 +75,21 @@ class Sidebar extends Component {
         var x = this.findIndex(listId, e.id_categorie)
         if (x == -1) { listId.push(e.id_categorie) } else { listId.splice(x, 1) }
         this.setState({ listId })
-        var {router} = this.props
-        // this.props.onSearch('','',1,12,router)
+        // var { router } = this.props
+        // console.log(router);
+
+        Router.push(`/search/${cleanUrl(e.name)}${e.id_categorie}/`);
+
+    }
+
+    searchPrice = () => {
+
+        var { price, search, pathname, categories, id_categorie } = this.state
+        console.log(price, search, pathname, categories, id_categorie);
+        
+        Router.push(`${pathname}/${categories}/${id_categorie}?search=${search}&price=${price[0] * 500000} AND ${price[1] * 500000}`)
+
+
     }
 
     findIndex(list, e) {
@@ -60,8 +111,9 @@ class Sidebar extends Component {
         if (sidebar) var { data } = sidebar
         if (data) var { data } = data
         if (data) var { CATEGORIES, BRANDS, OPERATION } = data
-        var { listId } = this.state
-        console.log(`listId`, listId);
+        // var { listId } = this.state
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', this.state.price);
+
         return (
             sidebar.loadding ? <Loading /> :
                 <div>
@@ -87,17 +139,27 @@ class Sidebar extends Component {
 
                         <div className="h4 col-xs-b25">Price</div>
                         <div id="prices-range" />
-                        <div className="simple-article size-1">PRICE: <b className="grey">$<span className="min-price">40</span> - $<span className="max-price">300</span></b></div>
+                        <div className="simple-article size-1">Giá: <button onClick={() => { this.searchPrice() }} style={{ margin: 10 }}>Tìm kiếm</button>
+                            <div>
+                                <hr></hr>
+
+                                <RangeSlider
+                                    onChange={(val) => { this.setState({ price: val }) }}
+                                    defaultValue={this.state.price} />
+                                <hr />
+                            </div>
+                            <b className="grey">VND <span className="min-price">{getVND(this.state.price[0] * 500000)}</span> - <span className="max-price">{getVND(this.state.price[1] * 500000)}</span></b></div>
                         <div className="empty-space col-xs-b25 col-sm-b50" />
 
 
                         <div className="h4 col-xs-b25">Thương Hiệu</div>
                         {BRANDS && BRANDS.length > 0 && BRANDS.map((e, i) => {
                             return <React.Fragment key={i}>
-                                <label className="checkbox-entry">
+                                {/* <label className="checkbox-entry">
                                     <input onChange={() => this.togleBrand(e)} type="checkbox" /><span>{e.name}</span>
 
-                                </label>
+                                </label> */}
+                                <a href={`/search/${cleanUrl(e.name)}${e.id_categorie}`}>{e.name}</a>
                                 <div className="empty-space col-xs-b10" />
                             </React.Fragment>
                         })
@@ -125,9 +187,10 @@ class Sidebar extends Component {
                         {OPERATION && OPERATION.length > 0 && OPERATION.map((e, i) => {
                             return <React.Fragment key={i}>
                                 <div className="empty-space col-xs-b10" />
-                                <label className="checkbox-entry">
+                                <a href={`/search/${cleanUrl(e.name)}${e.id_categorie}`}>{e.name}</a>
+                                {/* <label className="checkbox-entry">
                                     <input onChange={() => this.togleBrand(e)} type="checkbox" /><span>{e.name}</span>
-                                </label>
+                                </label> */}
                             </React.Fragment>
                         })
                         }

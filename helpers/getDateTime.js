@@ -12,6 +12,17 @@ export function getDateTime() {
     return d + '/' + mo + '/' + y + ' ' + h + ':' + mi + ':' + s
 };
 
+export function getDateTimeCountDown() {
+    let y = moment().get('year');
+    let mo = moment().get('month');  // 0 to 11
+    let d = moment().get('date');
+    let h = moment().get('hour');
+    let mi = moment().get('minute');
+    let s = moment().get('second');
+    let ms = moment().get('millisecond');
+    return `${mo+1},${d+1},${y}`
+};
+
 export function getVND(x) {
     return <CurrencyFormat value={x} displayType={'text'} thousandSeparator={true} prefix={' '} />
 

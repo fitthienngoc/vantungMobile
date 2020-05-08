@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import CurrencyFormat from 'react-currency-format';
 import Link from 'next/link'
-import { getVND } from '../../helpers/getDateTime';
+import { getVND, getDateTimeCountDown } from '../../helpers/getDateTime';
 export default class TabLetAdd extends Component {
 
     render() {
-        // console.log(`this.props`, this.props);
+        console.log(`this.props`, getDateTimeCountDown());
+        
         var { data } = this.props
         return (
             <div className="">
@@ -17,7 +18,7 @@ export default class TabLetAdd extends Component {
                         <div className="col-sm-6 col-md-4 col-md-offset-2 ">
                             <h3 className="h3 col-xs-b15 light">Máy tính bảng<span className="simple-article light">+</span> {data.name} <span className="color">+</span> free delivery</h3>
                             <div className="simple-article size-5 uppercase col-xs-b20"> <span className="simple-article light">{getVND(data.system)} VND</span></div>
-                            <div className="countdown max-width col-xs-b20" data-end="Sep,1,2017" />
+                            <div className="countdown max-width col-xs-b20" data-end={getDateTimeCountDown()} />
                             <div className="simple-article size-3 light col-xs-b30">{data.cpuHeDH} / {data.cpuSpeed} / {data.back_cameraQuayPhim}</div>
                             <div className="buttons-wrapper">
                                 <a className="button size-2 style-3" href={`/chi-tiet/${data.name.replace(/\s/g, '-')}/${data.Id}`}>

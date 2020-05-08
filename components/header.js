@@ -7,7 +7,6 @@ import AppPopup from './popup';
 import Cart from './cart/Cart';
 import { actSearchByIdCategory } from '../redux/actions/Search/sidebar';
 import Router from 'next/router'
-import { useRouter } from 'next/router'
 
 class Header extends React.Component {
 
@@ -23,10 +22,7 @@ class Header extends React.Component {
       pathname: '/'
     };
   }
-  componentDidMount() {
-
-    console.log('sssssssssssssssssss',window.location.pathname);
-    
+  componentDidMount() {    
     window.location && window.location.pathname ? this.setState({
       pathname: window.location.pathname
     }) : null

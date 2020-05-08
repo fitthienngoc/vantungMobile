@@ -13,6 +13,7 @@ class Page extends React.Component {
     }
     render() {
         var { router,onSearch } = this.props
+        // console.log('11111111111111111111111111',router);
         
         return <>
             <Search notify={toast} onAddProductToCart={this.props.onAddProductToCart} onSearch={onSearch} router={router} />
