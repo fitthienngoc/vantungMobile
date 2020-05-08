@@ -19,7 +19,7 @@
     "js-cookie": "^2.2.1",
     "less": "^3.11.1",
     "moment": "^2.24.0",
-    "next": "8.0.3",
+    "next": "9.3.2",
     "next-redux-wrapper": "^3.0.0",
     "nuka-carousel": "^4.6.3",
     "rc-slider": "^9.2.4",
