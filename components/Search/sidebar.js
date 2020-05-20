@@ -87,7 +87,7 @@ class Sidebar extends Component {
         var { price, search, pathname, categories, id_categorie } = this.state
         console.log(price, search, pathname, categories, id_categorie);
         
-        Router.push(`${pathname}/${categories}/${id_categorie}?search=${search}&price=${price[0] * 500000} AND ${price[1] * 500000}`)
+        Router.push(`/search/${categories}/${id_categorie}?search=${search}&price=${price[0] * 500000} AND ${price[1] * 500000}`)
 
 
     }
@@ -198,10 +198,10 @@ class Sidebar extends Component {
 
 
                         <div className="empty-space col-xs-b25 col-sm-b50" />
-                        <div className="h4 col-xs-b25">Từ khóa phổ biến</div>
+                        {/* <div className="h4 col-xs-b25">Từ khóa phổ biến</div>
                         <div className="tags light clearfix">
                             <a className="tag">headphoness</a>
-                        </div>
+                        </div> */}
                         <div className="empty-space col-xs-b25 col-sm-b50" />
                     </div>
 
